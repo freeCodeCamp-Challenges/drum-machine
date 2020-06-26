@@ -1,4 +1,4 @@
-import React, { useState, StyleSheet } from "react";
+import React, { useState, StyleSheet, useRef, useEffect } from "react";
 import "./App.css";
 
 const data = [
@@ -54,42 +54,71 @@ const data = [
 ];
 
 const DrumPad = props => {
+  const audio = useRef(null);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeydown);
+    window.focus();
+
+    return () => document.removeEventListener("keydown", handleKeydown);
+  });
+
+  const handleKeydown = event => {
+    if (event.keyCode === props.letter.charCodeAt()) {
+      audio.current.play();
+      audio.current.time = 0;
+      return props.handleKeydown();
+    } else {
+      return true;
+    }
+  };
+
+  const handleClick = event => {
+    audio.current.play();
+    audio.current.time = 0;
+    return props.onClick();
+  };
+
   return (
-    <button
-      className='drum-pad'
-      id={props.id}
-      onClick={props.onClick}
-    >
-      {props.letter}
-    </button>
+    <div>
+      <button className="drum-pad" id={props.id} onClick={handleClick}>
+        {props.letter}
+      </button>
+      <audio
+        ref={audio}
+        className="clip"
+        src={props.url}
+        id={props.letter}
+      ></audio>
+    </div>
   );
 };
 
-
-
-
 function App() {
-const [sound, setSound ] = useState('')
-const handleClick = (letter) => {
+  const [sound, setSound] = useState("");
 
-  setSound(letter)
-}
+  const handleClick = letter => {
+    setSound(letter);
+  };
+
   return (
-    <div style={styles.container} >
+    <div style={styles.container}>
       {/* <h1>Drum machine</h1> */}
       <div id="drum-machine">
         <div id="display">
           <strong style={{ letterTransform: "capitalize" }}>{sound}</strong>
         </div>
         <div style={styles.container}>
-        {data.map((pad, i) => (
-          <DrumPad
-            key={pad.id + i}
-            id={pad.id}
-            letter={pad.letter}
-            onClick={() => handleClick(pad.letter)}
-          />
-        ))}
+          {data.map((pad, i) => (
+            <DrumPad
+              key={pad.id + i}
+              id={pad.id}
+              url={pad.url}
+              letter={pad.letter}
+              handleKeydown={() => handleClick(pad.letter)}
+              onClick={() => handleClick(pad.letter)}
+            />
+          ))}
         </div>
       </div>
     </div>
@@ -99,7 +128,7 @@ const handleClick = (letter) => {
 const styles = (StyleSheet = {
   container: {
     display: "flex",
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center"
   }
