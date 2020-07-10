@@ -44,7 +44,8 @@ const data = [
   {
     id: "X",
     bird: "star-wars-x-wing",
-    url: "https://www.vogelstimmen.info/Vogelstimmen_GRATIS/Wespenbussard_Pernis_apivorus_R_AMPLE-E0348R.mp3"
+    url:
+      "https://www.vogelstimmen.info/Vogelstimmen_GRATIS/Wespenbussard_Pernis_apivorus_R_AMPLE-E0348R.mp3"
   },
   {
     id: "C",
@@ -80,18 +81,24 @@ const DrumPad = props => {
   };
 
   return (
-    <div className="drum-pad" id={props.id}>
-      <button className="drum-pads" id={props.id} onClick={handleClick}>
-        {props.id}
-      </button>
-      <audio
-        ref={audio}
-        className="clip"
-        src={props.url}
-        id={props.id}
-      ></audio>
+    <div className="drum-pad" id={props.id} onClick={handleClick}>
+      {props.id}
+      <audio ref={audio} className="clip" src={props.url} id={props.id}></audio>
     </div>
   );
+  // (
+  //   <div className="drum-pad" id={props.id}>
+  //     <button className="drum-pads" id={props.id} onClick={handleClick}>
+  //       {props.id}
+  //     </button>
+  //     <audio
+  //       ref={audio}
+  //       className="clip"
+  //       src={props.url}
+  //       id={props.id}
+  //     ></audio>
+  //   </div>
+  // );
 };
 
 function App() {
@@ -106,7 +113,9 @@ function App() {
       {/* <h1>Drum machine</h1> */}
       <div id="drum-machine">
         <div id="dspl">
-          <strong id="display" style={{ letterTransform: "capitalize" }}>{sound}</strong>
+          <strong id="display" style={{ letterTransform: "capitalize" }}>
+            {sound}
+          </strong>
         </div>
         <div style={styles.container}>
           {data.map((pad, i) => (
