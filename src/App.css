@@ -1,12 +1,12 @@
 
-#display {
+#dspl {
   text-align: center;
   font-size: 25px;
   margin-top: 10px;
   height: 70px;
 }
 
-.drum-pad {
+.drum-pads {
   display: inline-block; 
   position: relative; 
   appearance: button;
@@ -25,11 +25,11 @@
 }
 
 
-.drum-pad:hover {
+.drum-pads:hover {
   background-color: #0283B3;
 }
 
-.drum-pad:active {
+.drum-pads:active {
   background-color: #4FD0FF;
   box-shadow: 0px 5px 10px #23A8D9;
   transform: translateY(4px);
